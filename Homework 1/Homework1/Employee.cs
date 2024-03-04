@@ -15,7 +15,7 @@ namespace Homework1
         // emial property cannot be accessed due to protection level (contradiction in requirements)
         public override string ToString()
         {
-            return $"{FullName} {EMail} {ArgeementDate.ToString("dd.MM.yyyy")} {AgreementNr}";
+            return $"{FullName};{EMail};{ArgeementDate.ToString("dd.MM.yyyy")};{AgreementNr}";
         }
     }
 }

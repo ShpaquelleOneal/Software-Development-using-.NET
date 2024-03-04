@@ -9,10 +9,9 @@ namespace Homework1
     public interface IOrderManager
     {
         // methods that adds specific objects
-        void AddOrder(string orderDate, List<string> orderDetails, string amount);
+        public void AddOrder(string orderDate, string state, string customer, string employee);
 
-        void AddPerson(string name, string surname, string email);
-        void AddPerson(string name, string surname, string email, string agreementDate, string agreementNr);
+        void AddPerson(string fullname, string email);
 
         void AddProduct(string name, string price);
 

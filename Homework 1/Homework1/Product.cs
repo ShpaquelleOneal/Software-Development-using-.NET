@@ -11,6 +11,6 @@ namespace Homework1
         public string ProductName { get; set; }
         public double Price { get; set; }
 
-        public override string ToString() { return $"{ProductName} {Price}"; }    
+        public override string ToString() { return $"{ProductName};{Price}"; }    
     }
 }

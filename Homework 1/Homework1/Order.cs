@@ -25,6 +25,7 @@ namespace Homework1
             Number = GenOrderNum();
             OrderDate = DateTime.Now;
             State = State.New;
+            Details = new List<OrderDetail>();
         }
 
         // constructor to create an order with specified date
@@ -52,15 +53,9 @@ namespace Homework1
             string products = "";
             foreach (var product in Details)
             {
-                products += $"{ product.ProductName}\n";
+                products += $"OD:{product.ProductName};{product.Amount}\n";
             }
-            return $"Order number: {Number}\n" +
-                $"Order Date: {OrderDate}\n" +
-                $"Status: {State}\n" +
-                $"Customer: {Customer}\n" +
-                $"Employee responsible: {ResponsibleEmployee}\n" +
-                $"Order details:\n" +
-                $"{products}";
+            return $"{Number};{OrderDate.ToString("dd.MM.yyyy")};{State};{Customer.FullName};{ResponsibleEmployee.FullName}\n{products}";
         }
     }
 

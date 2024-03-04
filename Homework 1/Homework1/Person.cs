@@ -43,7 +43,7 @@ namespace Homework1
         }
         public override string ToString()
         {
-            return $"{FullName} {_eMail}";
+            return $"{FullName};{_eMail}";
         }
     }
 }
