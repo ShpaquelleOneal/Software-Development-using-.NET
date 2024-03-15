@@ -1,5 +1,4 @@
-﻿using FiguresClasses;
-using System;
+﻿using System;
 using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
@@ -11,28 +10,30 @@ using System.Runtime.CompilerServices;
 
 namespace Homework1
 {
+    // a class for data and order management
+    // reference to IOrderManager, IDataManager for additional info
     public class ManagementSystem : IOrderManager, IDataManager
     {
-        // store objects
+        // store objects that are to be temporarily stored in memory
         private Dictionary<string, Product> products = new Dictionary<string, Product>();
         private Dictionary<string, Person> persons = new Dictionary<string, Person>();
         private List<Order> orders = new List<Order>();
 
 
-        // functions to add objects to storage
+        // method to add a Product into memory from string input
         public void AddProduct(string name, string price)
         {
             products.Add(name, new Product { ProductName = name, Price = double.Parse(price) });
         }
 
-        // add person - customer
+        // method to add a Customer into memory from string input
         public void AddPerson(string fullname, string email)
         {
             string[] nameSurname = fullname.Split(' ');
             persons.Add(fullname, new Customer { Name = nameSurname[0], Surname = nameSurname[1], EMail = email });
         }
 
-        // add person - employee
+        // method to add an Employee into memory from string input
         public void AddPerson(string fullname, string email, string agreementDate, string agreementNr) 
         {
             string[] nameSurname = fullname.Split(' ');
@@ -43,7 +44,7 @@ namespace Homework1
                 });
         }
 
-        // add order with read data
+        // method to add an Order into memory from string input
         public void AddOrder(string orderDate, string state, string customer, string employee)
         {
             Order newOrder = new Order(DateTime.Parse(orderDate));
@@ -54,14 +55,14 @@ namespace Homework1
             orders.Add(newOrder);
         }
 
-        // add order details object
+        // method to add order positions into memory from string input
         public void AddOrderDetails(int orderIndex, string productName, string amount)
         {
             orders[orderIndex].addProduct(products[productName], int.Parse(amount));
         }
 
 
-        // functions that return a list of objects
+        // method that returns a list of stored Products
         public List<Product> GetProducts()
         {
             List<Product> productsList = new List<Product>();
@@ -71,6 +72,8 @@ namespace Homework1
             }
             return productsList;
         }
+
+        // method that returns a list of stored Persons, both Employees and Customers
         public List<Person> GetPersons()
         {
             List<Person> personList = new List<Person>();
@@ -80,16 +83,24 @@ namespace Homework1
             }
             return personList;
         }
+
+        // method that returns a list of stored Orders
         public List<Order> GetOrders()
         {
             return orders;
         }
 
-        // returns all information stored in the collections
+        // method that returns all information stored in the collections in specific format
+        // the format is recognized by reading function (Load())
         public string Print()
         {
             string result = "";
 
+            // each written line has an identificator if format - "XX:"
+            // for recognition of the object during the reading of file
+            // "PR:" - for products
+            // "PE:" - for persons
+            // "OR:" - for orders
             foreach (Product product in GetProducts())
             {
                 result += $"PR:{product.ToString()}\n";
@@ -109,7 +120,7 @@ namespace Homework1
 
         }
 
-        // save all info from the Print() function to a .txt file
+        // method that writes all info from the Print() function into a .txt file
         public bool Save(string path)
         {
             using (StreamWriter writer = new StreamWriter(path))
@@ -120,10 +131,14 @@ namespace Homework1
             return true;
         }
 
-        private int orderCounter = -1;
+        // method that reads all information from a .txt file with given file path
         public bool Load(string path)
         {
-            // read the file
+            // count index of an orders in the Orders list to have a reference
+            // used to input OrderDetails later in the Order
+            int orderCounter = -1; 
+
+            // read the file line by line until end of file
             using (StreamReader reader = new StreamReader(path))
             {
                 string line;
@@ -131,53 +146,60 @@ namespace Homework1
                 {
                     // read lines in format  XX: data data data data ...
                     // split the line based on the colon separator
+                    // and split the flow of actions based on the identificator
                     string[] parts = line.Split(":");
                     if (parts.Length == 2)
                     {
-                        string type = parts[0]; // identificator
+                        string type = parts[0]; // identificator of Object
                         string data = parts[1]; // data
 
-                        // if Product line
+                        // if Product line is read
                         if (type == "PR")
                         {
-                            // split product data based on space
+                            // split product data based on semicolon, if the format is correct, then add a new Product
                             string[] productData = data.Split(";");
                             if (productData.Length == 2)
                             {
                                 AddProduct(productData[0], productData[1]);
                             }
                         }
-                        // if Person line
+                        // if Person line is read
                         else if (type == "PE")
                         {
-                            // split person data based on space
+                            // split person data based on semicolon
                             string[] personData = data.Split(";");
-                            // add Customer
+                            
+                            // add a new Customer if line contains 2 strings
                             if (personData.Length == 2)
                             {
                                 AddPerson(personData[0], personData[1]);
-                            } 
-                            // add Employee
+                            }
+                            // add a new Employee if line contains 4 strings
                             else if (personData.Length == 4)
                             {
                                 AddPerson(personData[0], personData[1], personData[2], personData[3]);
                             }
                         }
-                        // if Order line
+                        // if Order line is read
                         else if (type == "OR")
                         {
-                            // split order data based on space
+                            // split order data based on semicolon
+                            // add a new order and move list one position of index orderCounter
+                            // to add OrderDetails lines into correct Order
                             string[] orderData = data.Split(";");
                             if (orderData.Length == 5)
                             {
+                                // old order number is skipped, since number generator have to be used instead for each new Order
                                 AddOrder(orderData[1], orderData[2], orderData[3], orderData[4]);
                                 orderCounter++;
 
                             }
                         }
+                        // if OrderDetails line is read
                         else if (type == "OD")
                         {
-                            // split order data based on space
+                            // split order data based on semicolon
+                            // if the format is correct, then add a new OrderDetails record in the previous order
                             string[] detailsData = data.Split(";");
                             if (detailsData.Length == 3)
                             {
@@ -190,7 +212,7 @@ namespace Homework1
             return true;
         }
 
-        // reset data in all storages
+        // reset data in all collections
         public bool Reset()
         {
             orders.Clear();

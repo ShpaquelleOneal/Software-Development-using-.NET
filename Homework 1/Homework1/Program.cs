@@ -1,9 +1,10 @@
 ﻿using Homework1;
 
-//code to set path
+// set file path to read/ write
 string path = "C:\\Test\\data.txt";
 
-var dm = new ManagementSystem(); // put here code to initialize your Data Manager class
+// test case scenatio
+var dm = new ManagementSystem();
 dm.CreateTestData();
 Console.WriteLine(dm.Print());
 dm.Save(path);
