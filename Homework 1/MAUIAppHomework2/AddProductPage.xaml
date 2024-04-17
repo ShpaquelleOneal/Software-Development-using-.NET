@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIAppHomework2.AddProductPage"
+             Title="AddProductPage">
+    <ScrollView>
+        <VerticalStackLayout WidthRequest="500"
+                             Spacing="20">
+            <!-- Input field for product name -->
+            <Label x:Name="ProductNameLabel"
+                   Text="Enter product name:"
+                   HorizontalOptions="Center"/>
+        
+            <Entry x:Name="ProductNameEntry"
+                   Text=""
+                   />
+
+            <!-- Input field for product price -->
+            <Label x:Name="ProductPriceLabel"
+                   Text="Enter product price:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="ProductPriceEntry"
+                   Text=""
+                   />
+
+            <Button x:Name="AddProductButton"
+                    Text="Add product"
+                    Clicked="AddProductButton_Clicked"
+                    />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

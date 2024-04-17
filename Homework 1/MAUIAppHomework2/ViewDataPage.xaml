@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIAppHomework2.ViewDataPage"
+             Title="ViewDataPage">
+    
+    <Grid ColumnDefinitions="*, *, *"
+          Padding="20"
+          RowSpacing="10"
+          ColumnSpacing="10">
+        
+        <!-- Show products -->
+        <StackLayout
+            x:Name="ProductStack"
+            Grid.Column="0"
+            Spacing="10">
+
+            <Button x:Name="ViewProductButton"
+                    Text="View Product Data"
+                    Clicked="ViewProductData_Clicked"/>
+
+        </StackLayout>
+
+        <!-- Show all persons -->
+        <StackLayout
+            x:Name="PersonStack"
+            Grid.Column="1"
+            Spacing="10">
+            
+            <Button x:Name="ViewPersonButton"
+                    Text="View Persons Data"
+                    Clicked="ViewPersonsData_Clicked"/>
+            
+        </StackLayout>
+        
+        <!-- Show orders -->
+        <StackLayout
+            x:Name="OrderStack"
+            Grid.Column="2"
+            Spacing="10">
+
+            <Button x:Name="ViewOrderButton"
+                    Text="View Orders Data"
+                    Clicked="ViewOrdersData_Clicked"/>
+
+        </StackLayout>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIAppHomework2.AddOrderPage"
+             Title="AddOrderPage">
+    <ScrollView>
+        <VerticalStackLayout WidthRequest="500"
+                             Spacing="20">
+            <!-- Input field for Order date -->
+            <Label x:Name="OrderDateLabel"
+                   Text="Enter order date:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="OrderDateEntry"
+                   Text=""
+                   />
+
+            <!-- Input field for state -->
+            <Label x:Name="OrderStateLabel"
+                   Text="Enter state of the order:"
+                   HorizontalOptions="Center"/>
+
+            <!-- Selection menu for Order state -->
+            <Picker x:Name="OrderStatePicker"
+                    Title="Select an Option:">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>New</x:String>
+                        <x:String>Completed</x:String>
+                        <x:String>Cancelled</x:String>
+                        <x:String>AwaitingPayment</x:String>
+                        <x:String>Pending</x:String>
+                        <x:String>AwaitingPickup</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <!-- Input field for customer name-->
+            <Label x:Name="CustomerNameLabel"
+                   Text="Enter customer name:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="CustomerNameEntry"
+                   Text=""
+                   />
+            <!-- Input field for customer surname-->
+            <Label x:Name="CustomerSurnameLabel"
+                   Text="Enter customer surname:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="CustomerSurnameEntry"
+                   Text=""
+                   />
+
+            <!-- Input field for employee name -->
+            <Label x:Name="EmployeeNameLabel"
+                   Text="Enter employee name:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="EmployeeNameEntry"
+                   Text=""
+                   />
+            <!-- Input field for employee surname -->
+            <Label x:Name="EmployeeSurnameLabel"
+                   Text="Enter employee surname:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="EmployeeSurnameEntry"
+                   Text=""
+                   />
+
+            <!-- Button to submit data -->
+            <Button x:Name="AddOrderButton"
+                    Text="Add Order"
+                    Clicked="AddOrderButton_Clicked"
+                    />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

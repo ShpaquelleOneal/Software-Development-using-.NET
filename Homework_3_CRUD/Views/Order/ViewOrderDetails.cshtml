@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@*List of all Order Details for chosen order*@
+
+@model Homework_3_CRUD.Models.ViewOrderDetailsViewModel
+
+<h1>Order Details for Order: @Model.orderNumber</h1>
+<div>
+    <a href="@Url.Action("List", "Order")" class="list-group-item list-group-item-action">Go Back</a>
+    @Html.ActionLink("Add new Order Detail", "AddOrderDetails", "Order", new { orderID = Model.orderDetailID }, new { @class = "list-group-item list-group-item-action active" })
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderDetail in Model.OrderDetailsList)
+        {
+            <tr>
+                <td>@GetProductName(orderDetail.ProductID)</td>
+                <td>@orderDetail.Amount</td>
+                <td>@CalculateTotal(orderDetail.ProductID, orderDetail.Amount)</td>
+                <td></td>
+                <td>
+                    @Html.ActionLink("Edit", "EditOrderDetail", "Order", new { orderDetailID = orderDetail.ID }, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+@functions {
+    // Method to find product name based on product ID
+    public string GetProductName(Guid productId)
+    {
+        var product = Model.ProductList.FirstOrDefault(p => p.ID == productId);
+        return product != null ? product.Name : "Product Not Found";
+    }
+}
+
+@functions {
+    // Method to calculate total
+    public string CalculateTotal(Guid productId, int amount)
+    {
+        var product = Model.ProductList.FirstOrDefault(p => p.ID == productId);
+        double total = product.Price * amount;
+        return product != null ? total.ToString() : "Product Not Found";
+    }
+}

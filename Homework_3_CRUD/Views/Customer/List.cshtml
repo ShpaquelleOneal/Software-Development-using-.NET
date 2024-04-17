@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@*List of all customers*@
+
+@model List<Homework_3_CRUD.Models.Entities.Customer>
+
+<h1>All Customers</h1>
+<a href="@Url.Action("Index", "Home")" class="list-group-item list-group-item-action">Go Back</a>
+<a class="list-group-item list-group-item-action active"
+        asp-controller="Customer" asp-action="Add">Add new Customer</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.Name</td>
+                <td>@customer.Surname</td>
+                <td>@customer.EMail</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.ID">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

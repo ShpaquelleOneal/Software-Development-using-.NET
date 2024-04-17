@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIAppHomework2.AddCustomerPage"
+             Title="AddCustomerPage">
+    <ScrollView>
+        <VerticalStackLayout WidthRequest="500"
+                             Spacing="20">
+        
+            <!-- Input field for Customer name -->
+            <Label x:Name="CustomerNameLabel"
+                   Text="Enter customer name:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="CustomerNameEntry"
+                   Text=""
+                   />
+        
+            <!-- Input field for Customer surname -->
+            <Label x:Name="CustomerSurnameLabel"
+                   Text="Enter customer surname:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="CustomerSurnameEntry"
+                   Text=""
+                   />
+
+            <!-- Input field for Customer email -->
+            <Label x:Name="CustomerEmailLabel"
+                   Text="Enter customer email:"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="CustomerEmailEntry"
+                   Text=""
+                   />
+        
+            <!-- Button to submit data -->
+            <Button x:Name="AddCustomerButton"
+                    Text="Add Customer"
+                    Clicked="AddCustomerButton_Clicked"
+                    />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

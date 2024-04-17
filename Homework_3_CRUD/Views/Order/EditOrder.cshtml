@@ -1,0 +1,63 @@
+﻿
+@* Reference an Order model *@
+@model Homework_3_CRUD.Models.EditOrderViewModel;
+
+@* Page for Order data editing *@
+<h1>Edit Order: @Model.Order.Number</h1>
+
+@if (Model is null)
+{
+    <p>No Orders found.</p>
+    <a href="@Url.Action("List", "Order")" class="btn btn-secondary">Go Back</a>
+}
+else
+{
+    <form method="post">
+        <div class="mt-3" hidden>
+            <label class="form-label">Order ID</label>
+            <input type="text" class="form-control" asp-for="Order.ID" readonly/>
+        </div>
+
+        <div class="mt-3" hidden>
+            <label class="form-label">Order Number</label>
+            <input type="text" class="form-control" asp-for="Order.Number" readonly />
+        </div>
+
+        <div class="mt-3">
+            <label for="customerDropdown">Modify Customer:</label>
+            <select id="customerDropdown" class="form-control" asp-for="Order.CustomerID">
+                @foreach (var customer in Model.Customers)
+                {
+                    <option value="@customer.ID">@customer.Name @customer.Surname @customer.EMail</option>
+                }
+            </select>
+        </div>
+
+        <div class="mt-3">
+            <label for="stateDropdown">Select State of the Order:</label>
+            <select id="stateDropdown" class="form-control" asp-for="Order.State">
+                <option value="0">New</option>
+                <option value="1">Completed</option>
+                <option value="2">Cancelled</option>
+                <option value="3">AwaitingPayment</option>
+                <option value="4">Pending</option>
+                <option value="5">AwaitingPickup</option>
+            </select>
+        </div>
+
+        <div class="mt-3">
+            <label class="form-label">Order Date</label>
+            <input type="datetime-local" class="form-control" asp-for="Order.OrderDate" />
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-danger"
+                    formaction="@Url.Action("Delete", "Order", new { orderID = Model.Order.ID })">
+                Delete
+            </button>
+            <a href="@Url.Action("List", "Order")" class="btn btn-secondary">Go Back</a>
+        </div>
+    </form>
+}
+

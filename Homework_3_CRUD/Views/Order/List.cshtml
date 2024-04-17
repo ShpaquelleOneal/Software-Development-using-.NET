@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@*List of all Order*@
+
+@model Homework_3_CRUD.Models.ShowOrderViewModel
+
+<h1>All Orders</h1>
+<a href="@Url.Action("Index", "Home")" class="list-group-item list-group-item-action">Go Back</a>
+<a class="list-group-item list-group-item-action active" asp-controller="Order" asp-action="Add">Add new Order</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>State</th>
+            <th>Order Date</th>
+            <th>Customer</th>
+            <th>Action</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orders in Model.Orders)
+        {
+            <tr>
+                <td>@orders.Number</td>
+                <td>@orders.State</td>
+                <td>@orders.OrderDate</td>
+                <td>@GetCustomerFullName(orders.CustomerID)</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Order" asp-action="ViewOrderDetails" asp-route-id="@orders.ID">View/ Delete Details</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Order" asp-action="EditOrder" asp-route-id="@orders.ID">Edit Order</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@functions {
+    // Method to find Customer name based on product ID
+    public string GetCustomerFullName(Guid customerId)
+    {
+        var customer = Model.Customers.FirstOrDefault(cs => cs.ID == customerId);
+        return customer != null ? customer.Name + " " + customer.Surname : "Customer Not Found";
+    }
+}

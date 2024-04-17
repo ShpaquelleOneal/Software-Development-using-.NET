@@ -15,9 +15,9 @@ namespace Homework1
     public class ManagementSystem : IOrderManager, IDataManager
     {
         // store objects that are to be temporarily stored in memory
-        private Dictionary<string, Product> products = new Dictionary<string, Product>();
-        private Dictionary<string, Person> persons = new Dictionary<string, Person>();
-        private List<Order> orders = new List<Order>();
+        public Dictionary<string, Product> products = new Dictionary<string, Product>();
+        public Dictionary<string, Person> persons = new Dictionary<string, Person>();
+        public List<Order> orders = new List<Order>();
 
 
         // method to add a Product into memory from string input
@@ -123,135 +123,167 @@ namespace Homework1
         // method that writes all info from the Print() function into a .txt file
         public bool Save(string path)
         {
-            using (StreamWriter writer = new StreamWriter(path))
+            try
             {
-                writer.WriteLine(Print());
+                using (StreamWriter writer = new StreamWriter(path))
+                {
+                    writer.WriteLine(Print());
+                }
+                return true;
             }
-
-            return true;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
         }
 
         // method that reads all information from a .txt file with given file path
         public bool Load(string path)
         {
-            // count index of an orders in the Orders list to have a reference
-            // used to input OrderDetails later in the Order
-            int orderCounter = -1; 
-
-            // read the file line by line until end of file
-            using (StreamReader reader = new StreamReader(path))
+            try
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                // count index of an orders in the Orders list to have a reference
+                // used to input OrderDetails later in the Order
+                int orderCounter = -1;
+
+                // read the file line by line until end of file
+                using (StreamReader reader = new StreamReader(path))
                 {
-                    // read lines in format  XX: data data data data ...
-                    // split the line based on the colon separator
-                    // and split the flow of actions based on the identificator
-                    string[] parts = line.Split(":");
-                    if (parts.Length == 2)
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        string type = parts[0]; // identificator of Object
-                        string data = parts[1]; // data
+                        // read lines in format  XX: data data data data ...
+                        // split the line based on the colon separator
+                        // and split the flow of actions based on the identificator
+                        string[] parts = line.Split(":");
+                        if (parts.Length == 2)
+                        {
+                            string type = parts[0]; // identificator of Object
+                            string data = parts[1]; // data
 
-                        // if Product line is read
-                        if (type == "PR")
-                        {
-                            // split product data based on semicolon, if the format is correct, then add a new Product
-                            string[] productData = data.Split(";");
-                            if (productData.Length == 2)
+                            // if Product line is read
+                            if (type == "PR")
                             {
-                                AddProduct(productData[0], productData[1]);
+                                // split product data based on semicolon, if the format is correct, then add a new Product
+                                string[] productData = data.Split(";");
+                                if (productData.Length == 2)
+                                {
+                                    AddProduct(productData[0], productData[1]);
+                                }
                             }
-                        }
-                        // if Person line is read
-                        else if (type == "PE")
-                        {
-                            // split person data based on semicolon
-                            string[] personData = data.Split(";");
-                            
-                            // add a new Customer if line contains 2 strings
-                            if (personData.Length == 2)
+                            // if Person line is read
+                            else if (type == "PE")
                             {
-                                AddPerson(personData[0], personData[1]);
-                            }
-                            // add a new Employee if line contains 4 strings
-                            else if (personData.Length == 4)
-                            {
-                                AddPerson(personData[0], personData[1], personData[2], personData[3]);
-                            }
-                        }
-                        // if Order line is read
-                        else if (type == "OR")
-                        {
-                            // split order data based on semicolon
-                            // add a new order and move list one position of index orderCounter
-                            // to add OrderDetails lines into correct Order
-                            string[] orderData = data.Split(";");
-                            if (orderData.Length == 5)
-                            {
-                                // old order number is skipped, since number generator have to be used instead for each new Order
-                                AddOrder(orderData[1], orderData[2], orderData[3], orderData[4]);
-                                orderCounter++;
+                                // split person data based on semicolon
+                                string[] personData = data.Split(";");
 
+                                // add a new Customer if line contains 2 strings
+                                if (personData.Length == 2)
+                                {
+                                    AddPerson(personData[0], personData[1]);
+                                }
+                                // add a new Employee if line contains 4 strings
+                                else if (personData.Length == 4)
+                                {
+                                    AddPerson(personData[0], personData[1], personData[2], personData[3]);
+                                }
                             }
-                        }
-                        // if OrderDetails line is read
-                        else if (type == "OD")
-                        {
-                            // split order data based on semicolon
-                            // if the format is correct, then add a new OrderDetails record in the previous order
-                            string[] detailsData = data.Split(";");
-                            if (detailsData.Length == 3)
+                            // if Order line is read
+                            else if (type == "OR")
                             {
-                                AddOrderDetails(orderCounter, detailsData[0], detailsData[2]);
+                                // split order data based on semicolon
+                                // add a new order and move list one position of index orderCounter
+                                // to add OrderDetails lines into correct Order
+                                string[] orderData = data.Split(";");
+                                if (orderData.Length == 5)
+                                {
+                                    // old order number is skipped, since number generator have to be used instead for each new Order
+                                    AddOrder(orderData[1], orderData[2], orderData[3], orderData[4]);
+                                    orderCounter++;
+
+                                }
+                            }
+                            // if OrderDetails line is read
+                            else if (type == "OD")
+                            {
+                                // split order data based on semicolon
+                                // if the format is correct, then add a new OrderDetails record in the previous order
+                                string[] detailsData = data.Split(";");
+                                if (detailsData.Length == 3)
+                                {
+                                    AddOrderDetails(orderCounter, detailsData[0], detailsData[2]);
+                                }
                             }
                         }
                     }
                 }
+                return true;
             }
-            return true;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
         }
 
         // reset data in all collections
         public bool Reset()
         {
-            orders.Clear();
-            persons.Clear();
-            products.Clear();
+            try
+            {
+                orders.Clear();
+                persons.Clear();
+                products.Clear();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
         }
 
         // test data creation
         public bool CreateTestData()
         {
-            // add 3 products
-            AddProduct("Apple","2.99");
-            AddProduct("Orange", "5.65");
-            AddProduct("Bread", "3.60");
+            try
+            {
+                // add 3 products
+                AddProduct("Apple", "2.99");
+                AddProduct("Orange", "5.65");
+                AddProduct("Bread", "3.60");
 
-            // add 2 customers
-            AddPerson("John Doe", "example1@gmail.com" );
-            AddPerson("Mark Pitt", "example2@gmail.com");
+                // add 2 customers
+                AddPerson("John Doe", "example1@gmail.com");
+                AddPerson("Mark Pitt", "example2@gmail.com");
 
-            // and 2 employees
-            AddPerson("Joanna Doeh", "example3@mail.com", "23.01.2024", "3465");
-            AddPerson("Matis Peterson", "example4@mail.com", "01.01.2023", "8897");
+                // and 2 employees
+                AddPerson("Joanna Doeh", "example3@mail.com", "23.01.2024", "3465");
+                AddPerson("Matis Peterson", "example4@mail.com", "01.01.2023", "8897");
 
-            // add 3 orders with details
-            AddOrder("01.01.2024", "New", "John Doe", "Joanna Doeh");
-            AddOrderDetails(0, "Apple", "5");
-            AddOrderDetails(0, "Orange", "3");
-            AddOrderDetails(0, "Bread", "10");
+                // add 3 orders with details
+                AddOrder("01.01.2024", "New", "John Doe", "Joanna Doeh");
+                AddOrderDetails(0, "Apple", "5");
+                AddOrderDetails(0, "Orange", "3");
+                AddOrderDetails(0, "Bread", "10");
 
-            AddOrder("05.11.2022", "Completed", "Mark Pitt", "Joanna Doeh");
-            AddOrderDetails(1, "Apple", "20");
-            AddOrderDetails(1, "Orange", "20");
+                AddOrder("05.11.2022", "Completed", "Mark Pitt", "Joanna Doeh");
+                AddOrderDetails(1, "Apple", "20");
+                AddOrderDetails(1, "Orange", "20");
 
-            AddOrder("01.06.2023", "AwaitingPickup", "Mark Pitt", "Matis Peterson");
-            AddOrderDetails(2, "Apple", "0");
+                AddOrder("01.06.2023", "AwaitingPickup", "Mark Pitt", "Matis Peterson");
+                AddOrderDetails(2, "Apple", "0");
 
-            return true;
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
         }
     }
 }

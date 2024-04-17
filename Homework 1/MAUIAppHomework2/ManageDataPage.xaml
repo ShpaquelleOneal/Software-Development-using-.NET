@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIAppHomework2.ManageDataPage"
+             Title="ManageDataPage">
+
+    <Grid ColumnDefinitions="500"
+          Padding="10"
+          RowSpacing="10"
+          HorizontalOptions="Center">
+        <StackLayout
+            Spacing="10">
+            <!-- Generate buttons for app navigation -->
+            <Label Text="Manage Data."
+                   HorizontalOptions="Center"
+                   FontSize="20"/>
+
+            <Button Text="View Stored Data"
+                    Clicked="ViewStoredData_Clicked"/>
+            
+            <Button Text="Add a new Product"
+                    Clicked="AddNewProduct_Clicked"/>
+            
+            <Button Text="Add a new Customer"
+                    Clicked="AddNewCustomer_Clicked"/>
+            
+            <Button Text="Create a new Order"
+                    Clicked="AddNewOrder_Clicked"/>
+            
+            <Button Text="Create Test Data"
+                    Clicked="CreateTestData_Clicked"/>
+            
+            <Image Source="data_icon.png"
+                   Aspect="Center"/>
+
+        </StackLayout>
+
+    </Grid>
+    
+</ContentPage>

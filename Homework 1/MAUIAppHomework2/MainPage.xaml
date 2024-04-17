@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIAppHomework2.MainPage">
+
+    <Grid ColumnDefinitions="500"
+          Padding="10"
+          RowSpacing="10"
+          HorizontalOptions="Center">
+
+        
+        
+        <StackLayout
+            Spacing="10">
+            <Label Text="Welcome to /Company Name/ Management System."
+                   HorizontalOptions="Center"
+                   FontSize="20"/>
+
+            <Button Text="Data Management page"
+                    Clicked="DataManagement_Clicked"
+                    />
+            <Button Text="Load Data from a File"
+                    Clicked="LoadData_Clicked"
+                    />
+            <Button Text="Save Data into a File"
+                    Clicked="SaveData_Clicked"
+                    />
+            <Button Text="Clear Current Data"
+                    Clicked="ClearData_Clicked"
+                    />
+            <Image Source="data_icon.png"
+                   Aspect="Center"/>
+
+        </StackLayout>
+
+        
+        
+
+    </Grid>
+
+</ContentPage>
