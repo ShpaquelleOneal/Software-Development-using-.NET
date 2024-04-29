@@ -1,6 +1,7 @@
 ﻿using Homework_3_CRUD.Data;
 using Homework_3_CRUD.Models;
 using Homework_3_CRUD.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.NetworkInformation;
@@ -87,6 +88,7 @@ namespace Homework_3_CRUD.Controllers
 
         // Edit specific customers
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(Guid id)
         {
             try
@@ -107,6 +109,7 @@ namespace Homework_3_CRUD.Controllers
 
         // Customer Edit method
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit (Customer viewModel)
         {
             try
@@ -141,6 +144,7 @@ namespace Homework_3_CRUD.Controllers
 
         // Customer Delete method
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete (Customer viewModel)
         {
             try

@@ -3,6 +3,7 @@ using Homework_3_CRUD.Models.Entities;
 using Homework_3_CRUD.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Homework_3_CRUD.Controllers
 {
@@ -119,6 +120,7 @@ namespace Homework_3_CRUD.Controllers
 
         // Get information for EDIT page
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditOrder(Guid id)
         {
             try
@@ -146,6 +148,7 @@ namespace Homework_3_CRUD.Controllers
 
         // Order Edit method
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditOrder(EditOrderViewModel viewModel)
         {
             try
@@ -180,6 +183,7 @@ namespace Homework_3_CRUD.Controllers
         }
         // Order Delete method
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(Guid orderID)
         {
             try
@@ -325,6 +329,7 @@ namespace Homework_3_CRUD.Controllers
         // Order Detail edit method
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditOrderDetail(Guid orderDetailID)
         {
             try
@@ -354,6 +359,7 @@ namespace Homework_3_CRUD.Controllers
 
         // Save new Order Details information
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditOrderDetail(EditOrderDetailViewModel viewModel)
         {
             try
@@ -385,6 +391,7 @@ namespace Homework_3_CRUD.Controllers
 
         // Order Details Delete method
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteOrderDetails(EditOrderDetailViewModel viewModel)
         {
             try
